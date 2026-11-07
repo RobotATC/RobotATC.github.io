@@ -1,0 +1,50 @@
+// Korean strings of the design studio. English lives in index.html and app.js; data-i18n keys and tr() point here.
+window.I18N = {
+  ko: {
+    "sub": "설계 스튜디오 — shared-link ATC 에 의한 모듈러 팔의 기구학–동역학 공동설계",
+    "engine": "<b>모델</b> 닫힌형 역기구학 · RNEA 역동역학 (Pinocchio) · convex hull 충돌 검사 (GJK) · 사다리꼴 관절 프로파일 · HEBI 카탈로그 정격. 접촉 물리 없음, 그리퍼 개폐 시간 무시.",
+    "nav.paper": "논문", "nav.studio": "스튜디오", "nav.code": "코드", "nav.cite": "인용", "top.present": "발표 모드", "dyn.exit": "발표 모드 끝내기 (Esc)",
+    "mode.design": "설계", "mode.coord": "조율",
+    "cells.h": "작업 셀",
+    "lam.h": "가중치 λ", "lam.note": "질량과 커버리지 사이의 가중치",
+    "coord.h": "조율", "coord.note": "링크 길이의 두 사본, 라운드별",
+    "coord.play": "라운드 재생", "coord.r1": "라운드 1",
+    "coord.hint": "링크 길이 평면 위에 기구학 사본은 초록, 동역학 사본은 빨강, 시스템 목표값은 회색. 십자는 all-in-one 해와 세 시작점. 장면에서는 두 사본이 조율된 설계 위에 막대 팔로 첫 작업점에 서 있다.",
+    "prog.h": "로봇 프로그램", "prog.play": "사이클 재생", "prog.first": "첫 작업점", "prog.speed": "속도",
+    "prog.hint": "공구축을 따라 LIN 후퇴, 다음 후퇴 자세로 PTP, LIN 접근. 그리퍼는 접근 중에 열리고 작업점에서 닫힌다.",
+    "joints.h": "관절", "joints.note": "끌어서 팔 자세를 직접 잡기",
+    "view.h": "보기", "view.way": "작업점과 접근축", "view.props": "셀 설비", "view.axes": "관절 좌표계", "view.grid": "바닥 격자", "view.paper": "논문 모드 (흰 배경, 그림자만)",
+    "cam.ph": "카메라 자세, 숫자 6개", "cam.copy": "복사", "cam.apply": "적용",
+    "leg.t25": "T25 · T8 구동기", "leg.t5": "T5 구동기", "leg.br": "브래킷", "leg.tube": "링크 튜브 a₂, a₃", "leg.wp": "작업점", "leg.part": "부품 · TCP", "leg.trace": "TCP 경로",
+    // written by app.js
+    "cell.a": "픽앤플레이스", "cell.b": "카트 적재", "cell.c": "검사 라인", "cell.d": "소재 투입", "cell.e": "부품 반출", "cell.f": "기계 텐딩", "cell.g": "다단 선반", "cell.h": "블록 적재", "cell.i": "분류 적재",
+    "dyn.wp": "작업점", "dyn.pairs": "쌍", "part.1": "Part 1 옮기기", "part.1.s": "한 사이클에 부품 하나", "part.2": "Part 2 텐딩", "part.2.s": "기계에 넣기, 꺼내기, 또는 둘 다", "part.3": "Part 3 쌓기", "part.3.s": "부품 여러 개가 쌓임", "dyn.hint": "작업점 {K}개, 하중 {P} kg (그리퍼 포함), 이동당 {T} s.",
+    "dyn.links": "링크 길이 a₂, a₃", "dyn.vapp": "접근 속도 v_app", "dyn.mass": "질량 M", "dyn.eta": "작업공간 커버리지 η",
+    "dyn.iters": "일치까지 반복 수", "dyn.best": ", 최선 시작점 ", "dyn.gap": "all-in-one 과의 차이", "dyn.spread": "세 시작점의 산포",
+    "dyn.delta": "가장 가벼운 팔(λ = 0) 대비: 질량 {M} g 으로 커버리지 {E}.",
+    "dyn.delta0": "모든 작업점에 닿는 가장 가벼운 팔. 커버리지는 결과로 얻어지는 값이다.",
+    "dyn.pause": "일시정지", "dyn.playc": "사이클 재생", "dyn.playr": "라운드 재생",
+    "dyn.round": "라운드 {R} / {N}", "dyn.noround": "기록된 라운드 없음",
+    "dyn.target": "목표값 a⁰", "dyn.kin": "기구학 a¹", "dyn.dynv": "동역학 a²", "dyn.incons": "불일치", "dyn.w": "벌점 가중치 w", "dyn.vappv": "접근 속도",
+    "dyn.ax2": "a₂  상완, mm", "dyn.ax3": "a₃  전완, mm",
+    "dyn.cv1": "불일치, mm", "dyn.cv2": "벌점 가중치 w", "dyn.cv3": "접근 속도, m/s",
+    "dyn.flange": "플랜지",
+    "dyn.j1": "J1 베이스", "dyn.j2": "J2 어깨", "dyn.j3": "J3 팔꿈치", "dyn.j4": "J4 손목 1", "dyn.j5": "J5 손목 2", "dyn.j6": "J6 공구"
+  },
+  en: {
+    "top.present": "Presentation", "dyn.exit": "Exit presentation (Esc)",
+    "cell.a": "Pick and place", "cell.b": "Cart loading", "cell.c": "Inspection line", "cell.d": "Raw part loading", "cell.e": "Part unloading", "cell.f": "Machine tending", "cell.g": "Shelf stocking", "cell.h": "Block stacking", "cell.i": "Sorting",
+    "dyn.wp": "waypoints", "dyn.pairs": "pairs", "part.1": "Part 1 Transfer", "part.1.s": "one part per cycle", "part.2": "Part 2 Tending", "part.2.s": "a machine loaded, unloaded, or both", "part.3": "Part 3 Stacking", "part.3.s": "parts accumulate", "dyn.hint": "{K} waypoints, payload {P} kg including the gripper, {T} s per move.",
+    "dyn.links": "link lengths a₂, a₃", "dyn.vapp": "approach speed v_app", "dyn.mass": "mass M", "dyn.eta": "workspace coverage η",
+    "dyn.iters": "iterations to agreement", "dyn.best": ", best start ", "dyn.gap": "gap to all-in-one", "dyn.spread": "spread of three starts",
+    "dyn.delta": "Against the lightest arm (λ = 0): {M} g of mass for {E} of coverage.",
+    "dyn.delta0": "The lightest arm that reaches every waypoint; coverage is whatever it happens to have.",
+    "dyn.pause": "Pause", "dyn.playc": "Play cycle", "dyn.playr": "Play rounds",
+    "dyn.round": "round {R} of {N}", "dyn.noround": "no rounds recorded",
+    "dyn.target": "target a⁰", "dyn.kin": "kinematic a¹", "dyn.dynv": "dynamic a²", "dyn.incons": "inconsistency", "dyn.w": "penalty weight w", "dyn.vappv": "approach speed",
+    "dyn.ax2": "a₂  upper arm, mm", "dyn.ax3": "a₃  forearm, mm",
+    "dyn.cv1": "inconsistency, mm", "dyn.cv2": "penalty weight w", "dyn.cv3": "approach speed, m/s",
+    "dyn.flange": "flange",
+    "dyn.j1": "J1 base", "dyn.j2": "J2 shoulder", "dyn.j3": "J3 elbow", "dyn.j4": "J4 wrist 1", "dyn.j5": "J5 wrist 2", "dyn.j6": "J6 tool"
+  }
+};

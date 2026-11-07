@@ -1,0 +1,538 @@
+{
+  "cell": "g",
+  "name": "Shelf stocking",
+  "name_ko": "다단 선반",
+  "K": 5,
+  "payload_kg": 1.5,
+  "t_seg_s": 1.5,
+  "pairs": 4,
+  "cycle_s": 19.0,
+  "mode": "reference_replay",
+  "note": "Stage 1: a recorded run of the Task agent where one had every field right, else a written reference dialogue (task_mode). Stage 2: a recorded run of the Layout agent (layout.run). Stage 3: coordination numbers from studio/data (final RobotATC campaign).",
+  "note_ko": "페이지용 대본 리플레이. 사용자 발화는 연구자가 쓴 것(reference replay)이고 사용자 연구 기록이 아님. 설비·검사·조율 수치는 studio/data (RobotATC 캠페인 7, 집기–놓기 프로그램)에서 옴.",
+  "chat": [
+    {
+      "who": "user",
+      "text": "A robot should stock a shelf with blocks that come in on a feeder. A block weighs 1 kg. The shelf has four tiers, 175 mm apart, one block per tier. A full shelf has to be done every 12 seconds.",
+      "text_ko": "공급기로 들어오는 블록을 선반에 채우는 로봇이 필요합니다. 블록은 1 kg 입니다. 선반은 네 단이고 단 간격은 175 mm, 단마다 블록 하나입니다. 선반 하나를 12초에 채워야 합니다."
+    },
+    {
+      "who": "agent",
+      "kind": "tool",
+      "text": "<i>textbook search:</i> robot applications pick and place shelving stocking<br><i>passages from pp.</i> 217, 241, 225, 317, 218, 316",
+      "text_ko": "<i>교재 검색:</i> robot applications pick and place shelving stocking<br><i>찾은 구절의 쪽:</i> 217, 241, 225, 317, 218, 316"
+    },
+    {
+      "who": "agent",
+      "text": "I propose that the robot work type is material transfer (pick-and-place), because the robot is moving blocks from a feeder to a shelf. Does that match your understanding? (textbook, p. 218)",
+      "text_ko": "I propose that the robot work type is material transfer (pick-and-place), because the robot is moving blocks from a feeder to a shelf. Does that match your understanding? (textbook, p. 218)"
+    },
+    {
+      "who": "user",
+      "text": "Yes, that is right.",
+      "text_ko": "Yes, that is right."
+    },
+    {
+      "who": "agent",
+      "kind": "tool",
+      "text": "<i>textbook search:</i> pick-and-place operation cycle points program<br><i>passages from pp.</i> 83, 218, 214, 477, 83, 80",
+      "text_ko": "<i>교재 검색:</i> pick-and-place operation cycle points program<br><i>찾은 구절의 쪽:</i> 83, 218, 214, 477, 83, 80"
+    },
+    {
+      "who": "agent",
+      "kind": "tool",
+      "text": "<i>textbook search:</i> production rate cycle time 12 seconds<br><i>passages from pp.</i> 399, 225, 49, 428, 50, 458",
+      "text_ko": "<i>교재 검색:</i> production rate cycle time 12 seconds<br><i>찾은 구절의 쪽:</i> 399, 225, 49, 428, 50, 458"
+    },
+    {
+      "who": "agent",
+      "text": "I propose the robot program as follows: point 1 is the feeder pick point;<br>point 2 is shelf tier 1;<br>point 3 is shelf tier 2;<br>point 4 is shelf tier 3;<br>point 5 is shelf tier 4. The carrying moves are: pick from point 1 to place on point 2, then pick from point 1 to place on point 3, then pick from point 1 to place on point 4, and finally pick from point 1 to place on point 5. After each carrying move the robot moves empty to the next pick point, and after the last place it moves empty back to point 1 to start the next cycle. (textbook, p. 80, p. 83, p. 218) Please confirm.",
+      "text_ko": "I propose the robot program as follows: point 1 is the feeder pick point;<br>point 2 is shelf tier 1;<br>point 3 is shelf tier 2;<br>point 4 is shelf tier 3;<br>point 5 is shelf tier 4. The carrying moves are: pick from point 1 to place on point 2, then pick from point 1 to place on point 3, then pick from point 1 to place on point 4, and finally pick from point 1 to place on point 5. After each carrying move the robot moves empty to the next pick point, and after the last place it moves empty back to point 1 to start the next cycle. (textbook, p. 80, p. 83, p. 218) Please confirm."
+    },
+    {
+      "who": "user",
+      "text": "Yes, that is right.",
+      "text_ko": "Yes, that is right.",
+      "fills": [
+        "sequence"
+      ]
+    },
+    {
+      "who": "agent",
+      "text": "What gripper is used and what is its mass in kilograms?",
+      "text_ko": "What gripper is used and what is its mass in kilograms?"
+    },
+    {
+      "who": "user",
+      "text": "A standard two-finger gripper of the robot vendor, 0.5 kg.",
+      "text_ko": "A standard two-finger gripper of the robot vendor, 0.5 kg."
+    },
+    {
+      "who": "agent",
+      "kind": "tool",
+      "text": "<i>textbook search:</i> payload calculation heaviest part plus gripper<br><i>passages from pp.</i> 216, 213, 231, 217, 216, 207",
+      "text_ko": "<i>교재 검색:</i> payload calculation heaviest part plus gripper<br><i>찾은 구절의 쪽:</i> 216, 213, 231, 217, 216, 207"
+    },
+    {
+      "who": "agent",
+      "text": "The payload is the heaviest part plus the gripper: 1.0 kg block + 0.5 kg gripper = 1.5 kg. (textbook, p. 216) Please confirm.",
+      "text_ko": "The payload is the heaviest part plus the gripper: 1.0 kg block + 0.5 kg gripper = 1.5 kg. (textbook, p. 216) Please confirm."
+    },
+    {
+      "who": "user",
+      "text": "Yes, that is right.",
+      "text_ko": "Yes, that is right.",
+      "fills": [
+        "payload"
+      ]
+    },
+    {
+      "who": "agent",
+      "text": "What is the total cycle time required for one full shelf load, including all robot moves and any machine or station time?",
+      "text_ko": "What is the total cycle time required for one full shelf load, including all robot moves and any machine or station time?"
+    },
+    {
+      "who": "user",
+      "text": "I do not know; that is what I am asking you.",
+      "text_ko": "I do not know; that is what I am asking you."
+    },
+    {
+      "who": "agent",
+      "text": "Cycle time: the engineer requires a full shelf load every 12 seconds, so the cycle time is 12 s. (textbook, p. 399) Machine or station time: none is required for this task. (textbook, p. 399) Moves in one cycle: 1. pick P1→place P2, 2. empty P2→P1, 3. pick P1→place P3, 4. empty P3→P1, 5. pick P1→place P4, 6. empty P4→P1, 7. pick P1→place P5, 8. empty P5→P1. (program, p. 80, p. 83, p. 218) Number of moves: 8. Time per move: 12 s ÷ 8 = 1.5 s. (calculation) Please confirm.",
+      "text_ko": "Cycle time: the engineer requires a full shelf load every 12 seconds, so the cycle time is 12 s. (textbook, p. 399) Machine or station time: none is required for this task. (textbook, p. 399) Moves in one cycle: 1. pick P1→place P2, 2. empty P2→P1, 3. pick P1→place P3, 4. empty P3→P1, 5. pick P1→place P4, 6. empty P4→P1, 7. pick P1→place P5, 8. empty P5→P1. (program, p. 80, p. 83, p. 218) Number of moves: 8. Time per move: 12 s ÷ 8 = 1.5 s. (calculation) Please confirm."
+    },
+    {
+      "who": "user",
+      "text": "Yes, that is right.",
+      "text_ko": "Yes, that is right.",
+      "fills": [
+        "timing"
+      ]
+    },
+    {
+      "who": "agent",
+      "text": "For each point, please tell me whether the robot enters from above or from the side. For example, is the feeder pick point entered from above or from the side? Similarly for shelf tier 1, tier 2, tier 3, tier 4. (textbook, p. 231)",
+      "text_ko": "For each point, please tell me whether the robot enters from above or from the side. For example, is the feeder pick point entered from above or from the side? Similarly for shelf tier 1, tier 2, tier 3, tier 4. (textbook, p. 231)"
+    },
+    {
+      "who": "user",
+      "text": "From above at the feeder, from the front at every tier.",
+      "text_ko": "From above at the feeder, from the front at every tier.",
+      "fills": [
+        "approach"
+      ]
+    },
+    {
+      "who": "agent",
+      "text": "Here is the full specification: the work type is material transfer (pick‑and‑place);<br>the program is four carrying moves: pick from point 1 to place on point 2, then pick from point 1 to place on point 3, then pick from point 1 to place on point 4, and finally pick from point 1 to place on point 5;<br>the part is a 1.0‑kg block;<br>the gripper mass is 0.5 kg;<br>the payload is 1.5 kg (block plus gripper);<br>the time per move is 1.5 seconds;<br>the approach for each point is above for point 1, and side for points 2–5;<br>there are no special fixtures. Please confirm that this specification is correct.",
+      "text_ko": "Here is the full specification: the work type is material transfer (pick‑and‑place);<br>the program is four carrying moves: pick from point 1 to place on point 2, then pick from point 1 to place on point 3, then pick from point 1 to place on point 4, and finally pick from point 1 to place on point 5;<br>the part is a 1.0‑kg block;<br>the gripper mass is 0.5 kg;<br>the payload is 1.5 kg (block plus gripper);<br>the time per move is 1.5 seconds;<br>the approach for each point is above for point 1, and side for points 2–5;<br>there are no special fixtures. Please confirm that this specification is correct.",
+      "confirm": true
+    },
+    {
+      "who": "user",
+      "text": "Yes, that is right.",
+      "text_ko": "Yes, that is right."
+    }
+  ],
+  "task_card": [
+    {
+      "key": "sequence",
+      "label": "Program",
+      "label_ko": "프로그램",
+      "value": "P1 → P2 · P1 → P3 · P1 → P4 · P1 → P5, back to P1",
+      "value_ko": "P1 → P2 · P1 → P3 · P1 → P4 · P1 → P5, P1 로 복귀",
+      "source": "textbook, p. 80, 83, 218",
+      "source_ko": "교재 80, 83, 218쪽",
+      "chip": "P1 → P2 · P1 → P3 · P1 → P4 · P1 → P5",
+      "chip_ko": "P1 → P2 · P1 → P3 · P1 → P4 · P1 → P5"
+    },
+    {
+      "key": "payload",
+      "label": "Payload",
+      "label_ko": "하중",
+      "value": "1 kg + gripper 0.5 kg on the carrying legs; gripper alone on the return",
+      "value_ko": "들고 가는 구간 1 kg + 그리퍼 0.5 kg; 복귀는 그리퍼만",
+      "source": "textbook, p. 216",
+      "source_ko": "교재 216쪽",
+      "chip": "1.5 kg",
+      "chip_ko": "1.5 kg"
+    },
+    {
+      "key": "timing",
+      "label": "Timing",
+      "label_ko": "시간",
+      "value": "1.5 s per move",
+      "value_ko": "이동당 1.5 s",
+      "source": "textbook, p. 80, 83, 218, 399",
+      "source_ko": "교재 80, 83, 218, 399쪽",
+      "chip": "1.5 s per move",
+      "chip_ko": "동작당 1.5 s"
+    },
+    {
+      "key": "approach",
+      "label": "Approach",
+      "label_ko": "접근",
+      "value": "vertical approach at P1, horizontal from the front at the four tiers, 50 mm (default)",
+      "value_ko": "P1 은 수직 접근, 네 단은 앞에서 수평 접근, 50 mm (기본값)",
+      "source": "textbook, p. 231",
+      "source_ko": "교재 231쪽",
+      "chip": "50 mm",
+      "chip_ko": "50 mm"
+    },
+    {
+      "key": "range",
+      "label": "Approach speed",
+      "label_ko": "접근 속도",
+      "value": "0.2 – 0.6 m/s (process limit, decided by the design)",
+      "value_ko": "0.2 – 0.6 m/s (공정 한계, 설계가 정함)",
+      "source": "stated by the agent, confirmed with the card",
+      "source_ko": "에이전트가 알림, 카드와 함께 확인",
+      "chip": "0.2 – 0.6 m/s",
+      "chip_ko": "0.2 – 0.6 m/s"
+    }
+  ],
+  "sketch": {
+    "points": [
+      {
+        "label": "P1 feeder",
+        "label_ko": "P1 공급기",
+        "fixture": "conveyor",
+        "fixture_ko": "공급기",
+        "approach": "down"
+      },
+      {
+        "label": "P2 tier 1",
+        "label_ko": "P2 1단",
+        "fixture": "shelf",
+        "fixture_ko": "선반",
+        "approach": "side"
+      },
+      {
+        "label": "P3 tier 2",
+        "label_ko": "P3 2단",
+        "fixture": "shelf",
+        "fixture_ko": "선반",
+        "approach": "side"
+      },
+      {
+        "label": "P4 tier 3",
+        "label_ko": "P4 3단",
+        "fixture": "shelf",
+        "fixture_ko": "선반",
+        "approach": "side"
+      },
+      {
+        "label": "P5 tier 4",
+        "label_ko": "P5 4단",
+        "fixture": "shelf",
+        "fixture_ko": "선반",
+        "approach": "side"
+      }
+    ],
+    "pairs": [
+      [
+        0,
+        1,
+        "A"
+      ],
+      [
+        0,
+        2,
+        "A"
+      ],
+      [
+        0,
+        3,
+        "A"
+      ],
+      [
+        0,
+        4,
+        "A"
+      ]
+    ]
+  },
+  "task_mode": "recorded",
+  "task_run": "task4_g_s0",
+  "task_note": "Recorded run of gpt-oss:20b (task4_g_s0). The engineer in it is scripted: plant facts only, and every proposal is accepted. The dialogue is shown as it was produced; 1 turn the harness sent back for being out of order is left out.",
+  "task_note_ko": "gpt-oss:20b 의 기록된 실행입니다 (task4_g_s0). 엔지니어는 대본입니다: 공장의 사실만 알고 제안을 모두 수락합니다. 대화는 나온 그대로입니다; 순서를 벗어나 실행틀이 되돌린 1 턴은 뺐습니다.",
+  "layout": {
+    "run": "layout_g_s0",
+    "submitted": true,
+    "note": "Recorded run of gpt-oss:20b (layout_g_s0). The confirmation in it is scripted. Tool calls and results are shown as recorded.",
+    "note_ko": "gpt-oss:20b 의 기록된 실행입니다 (layout_g_s0). 확인 답변은 대본입니다. 도구 호출과 결과는 기록 그대로입니다.",
+    "fixtures": [
+      {
+        "model": "conveyor",
+        "points": "P1",
+        "joined": false,
+        "dims": "length 600, width 170 mm (default)",
+        "dims_ko": "길이 600, 폭 170 mm (기본값)"
+      },
+      {
+        "model": "shelf",
+        "points": "P2 – P5",
+        "joined": false,
+        "dims": "tier depth 150, tier width 280 mm (layout sheet)",
+        "dims_ko": "단 깊이 150, 단 폭 280 mm (배치표)"
+      }
+    ],
+    "builds": [
+      [
+        {
+          "model": "conveyor",
+          "points": "P1",
+          "joined": false,
+          "dims": "length 600, width 170 mm (default)",
+          "dims_ko": "길이 600, 폭 170 mm (기본값)"
+        },
+        {
+          "model": "shelf",
+          "points": "P2 – P5",
+          "joined": false,
+          "dims": "tier depth 150, tier width 280 mm (layout sheet)",
+          "dims_ko": "단 깊이 150, 단 폭 280 mm (배치표)"
+        }
+      ]
+    ],
+    "checks": [
+      {
+        "label": "units and frames",
+        "label_ko": "단위와 좌표계",
+        "ok": true,
+        "detail": "positions in metres in the robot base frame, waypoints are flange poses",
+        "line": "positions in metres in the robot base frame, waypoints are flange poses"
+      },
+      {
+        "label": "reach",
+        "label_ko": "도달",
+        "ok": true,
+        "detail": "farthest waypoint P5: 0.45 m out, 0.68 m up; the longest arm reaches 1.0 m",
+        "line": "farthest waypoint P5: 0.45 m out, 0.68 m up"
+      },
+      {
+        "label": "clearance",
+        "label_ko": "간섭",
+        "ok": true,
+        "detail": "no grasp point lies inside a fixture",
+        "line": "no grasp point lies inside a fixture"
+      },
+      {
+        "label": "sizability",
+        "label_ko": "사이징 가능",
+        "ok": true,
+        "detail": "5 of 6 probe arms run the program with catalogue actuators at 0.30 m/s",
+        "line": "5 of 6 probe arms run the program with catalogue actuators at 0.30 m/s"
+      }
+    ],
+    "problem": [
+      {
+        "label": "Variables",
+        "label_ko": "변수",
+        "value": "a₂, a₃ ∈ [150, 500] mm · v_app ∈ [0.2, 0.6] m/s · six actuators from the catalog",
+        "value_ko": "a₂, a₃ ∈ [150, 500] mm · v_app ∈ [0.2, 0.6] m/s · 카탈로그에서 구동기 여섯"
+      },
+      {
+        "label": "Objective",
+        "label_ko": "목적",
+        "value": "min  M − λ·η,  λ ∈ {0, 0.5, 1, 2, 8}",
+        "value_ko": "min  M − λ·η,  λ ∈ {0, 0.5, 1, 2, 8}"
+      },
+      {
+        "label": "Constraints",
+        "label_ko": "제약",
+        "value": "all 5 waypoints reachable (closed-form IK) · torque and speed within the ratings along the program (RNEA) · no collision with the fixtures, the standing parts and the floor",
+        "value_ko": "5개 작업점 도달(닫힌형 IK) · 프로그램 내 토크·속도가 정격 안(RNEA) · 설비·놓인 부품·바닥과 충돌 없음"
+      },
+      {
+        "label": "Decomposition",
+        "label_ko": "분해",
+        "value": "kinematics (coverage, SQP) ‖ dynamics (sizing, pattern search), shared (a₂, a₃)",
+        "value_ko": "기구학(커버리지, SQP) ‖ 동역학(사이징, pattern search), 공유 (a₂, a₃)"
+      }
+    ],
+    "log": [
+      {
+        "kind": "input",
+        "points": [
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ],
+        "sheet": [
+          {
+            "p": "P1",
+            "equipment": "feeder belt",
+            "pos": "200, -400, 290",
+            "side": "above",
+            "side_ko": "위에서",
+            "known": "",
+            "known_ko": ""
+          },
+          {
+            "p": "P2",
+            "equipment": "shelf tier 1",
+            "pos": "450, 0, 150",
+            "side": "side",
+            "side_ko": "옆에서",
+            "known": "tier width 280 mm, tier depth 150 mm",
+            "known_ko": "단 폭 280 mm, 단 깊이 150 mm"
+          },
+          {
+            "p": "P3",
+            "equipment": "shelf tier 2",
+            "pos": "450, 0, 325",
+            "side": "side",
+            "side_ko": "옆에서",
+            "known": "",
+            "known_ko": ""
+          },
+          {
+            "p": "P4",
+            "equipment": "shelf tier 3",
+            "pos": "450, 0, 500",
+            "side": "side",
+            "side_ko": "옆에서",
+            "known": "",
+            "known_ko": ""
+          },
+          {
+            "p": "P5",
+            "equipment": "shelf tier 4",
+            "pos": "450, 0, 675",
+            "side": "side",
+            "side_ko": "옆에서",
+            "known": "",
+            "known_ko": ""
+          }
+        ]
+      },
+      {
+        "kind": "build",
+        "b": 0,
+        "call": [
+          {
+            "model": "conveyor",
+            "points": "P1"
+          },
+          {
+            "model": "shelf",
+            "points": "P2 – P5"
+          }
+        ],
+        "ok": true,
+        "n": 2,
+        "boxes": 12,
+        "joined": [],
+        "error": "",
+        "dims": [
+          {
+            "model": "conveyor",
+            "text": "length 600, width 170 mm (default)",
+            "text_ko": "길이 600, 폭 170 mm (기본값)"
+          },
+          {
+            "model": "shelf",
+            "text": "tier depth 150, tier width 280 mm (layout sheet)",
+            "text_ko": "단 깊이 150, 단 폭 280 mm (배치표)"
+          }
+        ]
+      },
+      {
+        "kind": "ask",
+        "question": "The conveyor fixture uses default dimensions: length 600 mm and width 170 mm. Are these values correct? If not, please provide the correct values for each dimension.",
+        "answer": "The default dimensions are fine."
+      },
+      {
+        "kind": "check",
+        "checks": [
+          {
+            "label": "units and frames",
+            "label_ko": "단위와 좌표계",
+            "ok": true,
+            "detail": "positions in metres in the robot base frame, waypoints are flange poses",
+            "line": "positions in metres in the robot base frame, waypoints are flange poses"
+          },
+          {
+            "label": "reach",
+            "label_ko": "도달",
+            "ok": true,
+            "detail": "farthest waypoint P5: 0.45 m out, 0.68 m up; the longest arm reaches 1.0 m",
+            "line": "farthest waypoint P5: 0.45 m out, 0.68 m up"
+          },
+          {
+            "label": "clearance",
+            "label_ko": "간섭",
+            "ok": true,
+            "detail": "no grasp point lies inside a fixture",
+            "line": "no grasp point lies inside a fixture"
+          },
+          {
+            "label": "sizability",
+            "label_ko": "사이징 가능",
+            "ok": true,
+            "detail": "5 of 6 probe arms run the program with catalogue actuators at 0.30 m/s",
+            "line": "5 of 6 probe arms run the program with catalogue actuators at 0.30 m/s"
+          }
+        ]
+      },
+      {
+        "kind": "problem",
+        "variables": 3,
+        "ranges": 3,
+        "constraints": 3,
+        "weights": 5
+      },
+      {
+        "kind": "ask",
+        "question": "All checks passed and the optimization problem is ready. Do you want to submit this specification?",
+        "answer": "Confirmed."
+      },
+      {
+        "kind": "submit"
+      }
+    ]
+  },
+  "opt": {
+    "chat": [
+      {
+        "who": "agent",
+        "round": 0,
+        "text": "Weight λ = 1 (default). Three starts, best kept. Round 1: target (325, 500 mm), kinematics (463, 500 mm), dynamics (319, 500 mm), 144 mm apart.",
+        "text_ko": "가중치 λ = 1 (기본값). 시작점 셋, 최선을 택합니다. 1 라운드: 목표값 (325, 500 mm), 기구학 (463, 500 mm), 동역학 (319, 500 mm), 144 mm 차이."
+      },
+      {
+        "who": "agent",
+        "round": 1,
+        "text": "Round 2: the copies did not close in, so the weight rises, w 0.40 → 0.50.",
+        "text_ko": "2 라운드: 두 사본이 더 좁혀지지 않아 가중치를 올립니다, w 0.40 → 0.50."
+      },
+      {
+        "who": "agent",
+        "round": 10,
+        "text": "Round 11: 7.2 mm apart, v_app 0.30 m/s.",
+        "text_ko": "11 라운드: 7.2 mm 차이, v_app 0.30 m/s."
+      },
+      {
+        "who": "agent",
+        "round": 12,
+        "text": "Round 13: the copies agree within 1 mm. Re-verifying the design on the full cycle.",
+        "text_ko": "13 라운드: 두 사본이 1 mm 안에서 일치. 전체 사이클로 설계를 재검증합니다."
+      },
+      {
+        "who": "agent",
+        "at": "design",
+        "confirm": true,
+        "text": "Design: tubes 322 / 500 mm, v_app 0.30 m/s, T5-4 · T8-9 · T8-9 · T5-4 · T5-1 · T5-1, 4.779 kg, η 0.890. Best of three starts: S2. Accept?",
+        "text_ko": "설계: 튜브 322 / 500 mm, v_app 0.30 m/s, T5-4 · T8-9 · T8-9 · T5-4 · T5-1 · T5-1, 4.779 kg, η 0.890. 시작점 셋 중 최선: S2. 받아들이시겠습니까?"
+      },
+      {
+        "who": "user",
+        "text": "Accept.",
+        "text_ko": "받아들여."
+      }
+    ]
+  }
+}

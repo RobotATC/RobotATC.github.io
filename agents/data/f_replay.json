@@ -1,0 +1,466 @@
+{
+  "cell": "f",
+  "name": "Machine tending",
+  "name_ko": "기계 텐딩",
+  "K": 3,
+  "payload_kg": 3.0,
+  "t_seg_s": 1.2,
+  "pairs": 2,
+  "cycle_s": 6.45,
+  "mode": "reference_replay",
+  "note": "Stage 1: a recorded run of the Task agent where one had every field right, else a written reference dialogue (task_mode). Stage 2: a recorded run of the Layout agent (layout.run). Stage 3: coordination numbers from studio/data (final RobotATC campaign).",
+  "note_ko": "페이지용 대본 리플레이. 사용자 발화는 연구자가 쓴 것(reference replay)이고 사용자 연구 기록이 아님. 설비·검사·조율 수치는 studio/data (RobotATC 캠페인 7, 집기–놓기 프로그램)에서 옴.",
+  "chat": [
+    {
+      "who": "user",
+      "text": "One robot should tend a machine tool. Raw parts come on a tray, finished parts go to a table. A part weighs 2.5 kg. Machining takes 20 seconds, and the machine has to deliver a part every 23.6 seconds. The robot has one gripper.",
+      "text_ko": "로봇 한 대가 공작기계를 돌봐야 합니다. 소재는 트레이로 오고 완성품은 테이블로 갑니다. 부품은 2.5 kg 입니다. 가공은 20초이고, 기계에서 23.6초마다 하나씩 나와야 합니다. 그리퍼는 하나입니다."
+    },
+    {
+      "who": "agent",
+      "fills": [
+        "sequence"
+      ],
+      "text": "In the textbook's terms this is machine loading and unloading; with one gripper the same part is set into the chuck and picked up again there (Groover, ch. 8). I read two pairs: P1 tray to P2 chuck with the raw part, then P2 chuck to P3 table with the finished part, back to P1. Positions come from the plant drawing. Is that the job?",
+      "text_ko": "교재의 분류로는 기계 적재와 반출. 그리퍼가 하나라 같은 부품을 척에 넣었다가 그 자리에서 다시 집습니다입니다 (Groover 8장). 쌍 둘: 소재를 트레이 P1 에서 척 P2 로, 가공품을 척 P2 에서 테이블 P3 로, P1 로 복귀로 읽었습니다. 위치는 도면에서 가져옵니다. 이 작업이 맞습니까?"
+    },
+    {
+      "who": "user",
+      "text": "Yes.",
+      "text_ko": "네, 맞습니다."
+    },
+    {
+      "who": "agent",
+      "asks": "payload_scope",
+      "text": "What the robot carries is the part and the gripper together (net load capacity, p. 213). Which gripper will it use?",
+      "text_ko": "로봇이 드는 것은 부품과 그리퍼를 합친 무게입니다 (순 하중, 213쪽). 어떤 그리퍼를 쓰십니까?"
+    },
+    {
+      "who": "user",
+      "text": "The vendor's two-finger gripper, 0.5 kg.",
+      "text_ko": "벤더의 두 손가락 그리퍼이고 0.5 kg 입니다."
+    },
+    {
+      "who": "agent",
+      "fills": [
+        "payload"
+      ],
+      "text": "Then the payload is 2.5 kg plus 0.5 kg on the carrying moves, and the gripper alone on the way back.",
+      "text_ko": "그러면 들고 가는 이동의 하중은 2.5 kg 에 0.5 kg 을 더한 값이고, 돌아오는 이동은 그리퍼만입니다."
+    },
+    {
+      "who": "agent",
+      "asks": "time_scope",
+      "fills": [
+        "timing"
+      ],
+      "text": "23.6 s per cycle less 20 s of machining leaves 3.6 s for the robot. Three moves, tray to chuck, chuck to table and back to the tray, so 1.2 s per move (cycle time, pp. 225 to 226). Shall I take that?",
+      "text_ko": "사이클 23.6초에서 가공 20초를 빼면 로봇에게 3.6초가 남습니다. 트레이에서 척, 척에서 테이블, 다시 트레이, 이동이 셋이므로 이동당 1.2초입니다 (사이클 시간, 225–226쪽). 이대로 잡을까요?"
+    },
+    {
+      "who": "user",
+      "text": "Yes.",
+      "text_ko": "네."
+    },
+    {
+      "who": "agent",
+      "asks": "approach",
+      "text": "From which side is each point entered?",
+      "text_ko": "각 자리에는 어느 쪽에서 들어갑니까?"
+    },
+    {
+      "who": "user",
+      "text": "From above at the tray and the table, straight in at the chuck.",
+      "text_ko": "트레이와 테이블은 위에서, 척에는 옆에서 똑바로요."
+    },
+    {
+      "who": "agent",
+      "fills": [
+        "approach"
+      ],
+      "confirm": true,
+      "text": "Noted: vertical approach at P1 and P3, horizontal into the chuck at P2, with an approach and a depart move of 50 mm at each point (p. 230). The approach speed is left to the design, within 0.2 to 0.6 m/s. Please confirm the task specification.",
+      "text_ko": "확인: P1·P3 는 수직 접근, P2 는 척으로 수평 접근, 자리마다 접근·후퇴 50 mm 를 둡니다 (230쪽). 접근 속도는 0.2–0.6 m/s 안에서 설계가 정합니다. 작업 사양을 확인해 주세요."
+    }
+  ],
+  "task_card": [
+    {
+      "key": "sequence",
+      "label": "Program",
+      "label_ko": "프로그램",
+      "value": "P1 → P2 · P2 → P3, back to P1",
+      "value_ko": "P1 → P2 · P2 → P3, P1 로 복귀",
+      "source": "work type and program, read from the request",
+      "source_ko": "요구에서 읽은 작업 유형과 프로그램",
+      "chip": "P1 → P2 · P2 → P3",
+      "chip_ko": "P1 → P2 · P2 → P3"
+    },
+    {
+      "key": "payload",
+      "label": "Payload",
+      "label_ko": "하중",
+      "value": "2.5 kg + gripper 0.5 kg on the carrying legs; gripper alone on the return",
+      "value_ko": "들고 가는 구간 2.5 kg + 그리퍼 0.5 kg; 복귀는 그리퍼만",
+      "source": "part mass + gripper (textbook, p. 213)",
+      "source_ko": "부품 질량 + 그리퍼 (교재 213쪽)",
+      "chip": "3.0 kg",
+      "chip_ko": "3.0 kg"
+    },
+    {
+      "key": "timing",
+      "label": "Timing",
+      "label_ko": "시간",
+      "value": "1.2 s per move",
+      "value_ko": "이동당 1.2 s",
+      "source": "derived from the required rate (textbook, pp. 225 to 226)",
+      "source_ko": "요구 생산량에서 도출 (교재 225–226쪽)",
+      "chip": "1.2 s per move",
+      "chip_ko": "동작당 1.2 s"
+    },
+    {
+      "key": "approach",
+      "label": "Approach",
+      "label_ko": "접근",
+      "value": "vertical approach at P1 and P3, horizontal into the chuck at P2, 50 mm (default)",
+      "value_ko": "P1·P3 는 수직 접근, P2 는 척으로 수평 접근, 50 mm (기본값)",
+      "source": "answer: “From above at the tray and the table, straight in at the chuck”",
+      "source_ko": "답변: “트레이와 테이블은 위에서, 척에는 옆에서 똑바로요”",
+      "chip": "50 mm",
+      "chip_ko": "50 mm"
+    },
+    {
+      "key": "range",
+      "label": "Approach speed",
+      "label_ko": "접근 속도",
+      "value": "0.2 – 0.6 m/s (process limit, decided by the design)",
+      "value_ko": "0.2 – 0.6 m/s (공정 한계, 설계가 정함)",
+      "source": "stated by the agent, confirmed with the card",
+      "source_ko": "에이전트가 알림, 카드와 함께 확인",
+      "chip": "0.2 – 0.6 m/s",
+      "chip_ko": "0.2 – 0.6 m/s"
+    }
+  ],
+  "sketch": {
+    "points": [
+      {
+        "label": "P1 tray",
+        "label_ko": "P1 트레이",
+        "fixture": "tray",
+        "fixture_ko": "트레이",
+        "approach": "down"
+      },
+      {
+        "label": "P2 chuck",
+        "label_ko": "P2 척",
+        "fixture": "machine",
+        "fixture_ko": "기계",
+        "approach": "side"
+      },
+      {
+        "label": "P3 table",
+        "label_ko": "P3 테이블",
+        "fixture": "table",
+        "fixture_ko": "테이블",
+        "approach": "down"
+      }
+    ],
+    "pairs": [
+      [
+        0,
+        1,
+        "A"
+      ],
+      [
+        1,
+        2,
+        "A"
+      ]
+    ]
+  },
+  "task_mode": "reference",
+  "task_run": null,
+  "task_note": "Written reference dialogue. No recorded run of this cell had every field right at the first proposal, so the page shows the derivation the cell was defined with.",
+  "task_note_ko": "쓴 참조 대화입니다. 이 셀은 첫 제안에서 모든 칸이 맞은 기록이 없어, 셀을 정의할 때의 도출 과정을 보입니다.",
+  "layout": {
+    "run": "layout_f_s0",
+    "submitted": true,
+    "note": "Recorded run of gpt-oss:20b (layout_f_s0). The confirmation in it is scripted. Tool calls and results are shown as recorded.",
+    "note_ko": "gpt-oss:20b 의 기록된 실행입니다 (layout_f_s0). 확인 답변은 대본입니다. 도구 호출과 결과는 기록 그대로입니다.",
+    "fixtures": [
+      {
+        "model": "tray",
+        "points": "P1",
+        "joined": false,
+        "dims": "top x 170, top y 170 mm (default)",
+        "dims_ko": "상판 x 170, 상판 y 170 mm (기본값)"
+      },
+      {
+        "model": "chuck",
+        "points": "P2",
+        "joined": false,
+        "dims": "opening width 130 mm (layout sheet)",
+        "dims_ko": "개구 폭 130 mm (배치표)"
+      },
+      {
+        "model": "bench",
+        "points": "P3",
+        "joined": false,
+        "dims": "top x 170, top y 170 mm (default)",
+        "dims_ko": "상판 x 170, 상판 y 170 mm (기본값)"
+      }
+    ],
+    "builds": [
+      [
+        {
+          "model": "tray",
+          "points": "P1",
+          "joined": false,
+          "dims": "top x 170, top y 170 mm (default)",
+          "dims_ko": "상판 x 170, 상판 y 170 mm (기본값)"
+        },
+        {
+          "model": "chuck",
+          "points": "P2",
+          "joined": false,
+          "dims": "opening width 130 mm (layout sheet)",
+          "dims_ko": "개구 폭 130 mm (배치표)"
+        },
+        {
+          "model": "bench",
+          "points": "P3",
+          "joined": false,
+          "dims": "top x 170, top y 170 mm (default)",
+          "dims_ko": "상판 x 170, 상판 y 170 mm (기본값)"
+        }
+      ]
+    ],
+    "checks": [
+      {
+        "label": "units and frames",
+        "label_ko": "단위와 좌표계",
+        "ok": true,
+        "detail": "positions in metres in the robot base frame, waypoints are flange poses",
+        "line": "positions in metres in the robot base frame, waypoints are flange poses"
+      },
+      {
+        "label": "reach",
+        "label_ko": "도달",
+        "ok": true,
+        "detail": "farthest waypoint P2: 0.50 m out, 0.40 m up; the longest arm reaches 1.0 m",
+        "line": "farthest waypoint P2: 0.50 m out, 0.40 m up"
+      },
+      {
+        "label": "clearance",
+        "label_ko": "간섭",
+        "ok": true,
+        "detail": "no grasp point lies inside a fixture",
+        "line": "no grasp point lies inside a fixture"
+      },
+      {
+        "label": "sizability",
+        "label_ko": "사이징 가능",
+        "ok": true,
+        "detail": "6 of 6 probe arms run the program with catalogue actuators at 0.30 m/s",
+        "line": "6 of 6 probe arms run the program with catalogue actuators at 0.30 m/s"
+      }
+    ],
+    "problem": [
+      {
+        "label": "Variables",
+        "label_ko": "변수",
+        "value": "a₂, a₃ ∈ [150, 500] mm · v_app ∈ [0.2, 0.6] m/s · six actuators from the catalog",
+        "value_ko": "a₂, a₃ ∈ [150, 500] mm · v_app ∈ [0.2, 0.6] m/s · 카탈로그에서 구동기 여섯"
+      },
+      {
+        "label": "Objective",
+        "label_ko": "목적",
+        "value": "min  M − λ·η,  λ ∈ {0, 0.5, 1, 2, 8}",
+        "value_ko": "min  M − λ·η,  λ ∈ {0, 0.5, 1, 2, 8}"
+      },
+      {
+        "label": "Constraints",
+        "label_ko": "제약",
+        "value": "all 3 waypoints reachable (closed-form IK) · torque and speed within the ratings along the program (RNEA) · no collision with the fixtures, the standing parts and the floor",
+        "value_ko": "3개 작업점 도달(닫힌형 IK) · 프로그램 내 토크·속도가 정격 안(RNEA) · 설비·놓인 부품·바닥과 충돌 없음"
+      },
+      {
+        "label": "Decomposition",
+        "label_ko": "분해",
+        "value": "kinematics (coverage, SQP) ‖ dynamics (sizing, pattern search), shared (a₂, a₃)",
+        "value_ko": "기구학(커버리지, SQP) ‖ 동역학(사이징, pattern search), 공유 (a₂, a₃)"
+      }
+    ],
+    "log": [
+      {
+        "kind": "input",
+        "points": [
+          "P1",
+          "P2",
+          "P3"
+        ],
+        "sheet": [
+          {
+            "p": "P1",
+            "equipment": "raw part tray",
+            "pos": "350, -250, 315",
+            "side": "above",
+            "side_ko": "위에서",
+            "known": "",
+            "known_ko": ""
+          },
+          {
+            "p": "P2",
+            "equipment": "chuck of the machine tool",
+            "pos": "500, 0, 400",
+            "side": "side",
+            "side_ko": "옆에서",
+            "known": "opening width 130 mm",
+            "known_ko": "개구 폭 130 mm"
+          },
+          {
+            "p": "P3",
+            "equipment": "table for finished parts",
+            "pos": "200, 350, 265",
+            "side": "above",
+            "side_ko": "위에서",
+            "known": "",
+            "known_ko": ""
+          }
+        ]
+      },
+      {
+        "kind": "build",
+        "b": 0,
+        "call": [
+          {
+            "model": "tray",
+            "points": "P1"
+          },
+          {
+            "model": "chuck",
+            "points": "P2"
+          },
+          {
+            "model": "bench",
+            "points": "P3"
+          }
+        ],
+        "ok": true,
+        "n": 3,
+        "boxes": 13,
+        "joined": [],
+        "error": "",
+        "dims": [
+          {
+            "model": "tray",
+            "text": "top x 170, top y 170 mm (default)",
+            "text_ko": "상판 x 170, 상판 y 170 mm (기본값)"
+          },
+          {
+            "model": "chuck",
+            "text": "opening width 130 mm (layout sheet)",
+            "text_ko": "개구 폭 130 mm (배치표)"
+          },
+          {
+            "model": "bench",
+            "text": "top x 170, top y 170 mm (default)",
+            "text_ko": "상판 x 170, 상판 y 170 mm (기본값)"
+          }
+        ]
+      },
+      {
+        "kind": "ask",
+        "question": "The tray and bench are using default dimensions of 170 mm × 170 mm for their top surfaces. Are these dimensions correct for your plant? If not, please provide the correct values in metres.",
+        "answer": "The default dimensions are fine."
+      },
+      {
+        "kind": "check",
+        "checks": [
+          {
+            "label": "units and frames",
+            "label_ko": "단위와 좌표계",
+            "ok": true,
+            "detail": "positions in metres in the robot base frame, waypoints are flange poses",
+            "line": "positions in metres in the robot base frame, waypoints are flange poses"
+          },
+          {
+            "label": "reach",
+            "label_ko": "도달",
+            "ok": true,
+            "detail": "farthest waypoint P2: 0.50 m out, 0.40 m up; the longest arm reaches 1.0 m",
+            "line": "farthest waypoint P2: 0.50 m out, 0.40 m up"
+          },
+          {
+            "label": "clearance",
+            "label_ko": "간섭",
+            "ok": true,
+            "detail": "no grasp point lies inside a fixture",
+            "line": "no grasp point lies inside a fixture"
+          },
+          {
+            "label": "sizability",
+            "label_ko": "사이징 가능",
+            "ok": true,
+            "detail": "6 of 6 probe arms run the program with catalogue actuators at 0.30 m/s",
+            "line": "6 of 6 probe arms run the program with catalogue actuators at 0.30 m/s"
+          }
+        ]
+      },
+      {
+        "kind": "problem",
+        "variables": 3,
+        "ranges": 3,
+        "constraints": 3,
+        "weights": 5
+      },
+      {
+        "kind": "ask",
+        "question": "The optimization problem has been generated with the variables, ranges, constraints, and objective shown. Do you confirm this problem for submission?",
+        "answer": "Confirmed."
+      },
+      {
+        "kind": "submit"
+      }
+    ]
+  },
+  "opt": {
+    "chat": [
+      {
+        "who": "agent",
+        "round": 0,
+        "text": "Weight λ = 1 (default). Three starts, 2 converged, best kept. Round 1: target (400, 200 mm), kinematics (500, 317 mm), dynamics (388, 200 mm), 229 mm apart.",
+        "text_ko": "가중치 λ = 1 (기본값). 시작점 셋 중 2개 수렴, 최선을 택합니다. 1 라운드: 목표값 (400, 200 mm), 기구학 (500, 317 mm), 동역학 (388, 200 mm), 229 mm 차이."
+      },
+      {
+        "who": "agent",
+        "round": 1,
+        "text": "Round 2: the copies did not close in, so the weight rises, w 0.40 → 0.50.",
+        "text_ko": "2 라운드: 두 사본이 더 좁혀지지 않아 가중치를 올립니다, w 0.40 → 0.50."
+      },
+      {
+        "who": "agent",
+        "round": 14,
+        "text": "Round 15: 8.3 mm apart, v_app 0.40 m/s.",
+        "text_ko": "15 라운드: 8.3 mm 차이, v_app 0.40 m/s."
+      },
+      {
+        "who": "agent",
+        "round": 21,
+        "text": "Round 22: the copies agree within 1 mm. Re-verifying the design on the full cycle.",
+        "text_ko": "22 라운드: 두 사본이 1 mm 안에서 일치. 전체 사이클로 설계를 재검증합니다."
+      },
+      {
+        "who": "agent",
+        "at": "design",
+        "confirm": true,
+        "text": "Design: tubes 446 / 228 mm, v_app 0.40 m/s, T5-4 · T25-20 · T8-9 · T8-3 · T5-1 · T5-1, 5.703 kg, η 0.909. Best of three starts: S0. Accept?",
+        "text_ko": "설계: 튜브 446 / 228 mm, v_app 0.40 m/s, T5-4 · T25-20 · T8-9 · T8-3 · T5-1 · T5-1, 5.703 kg, η 0.909. 시작점 셋 중 최선: S0. 받아들이시겠습니까?"
+      },
+      {
+        "who": "user",
+        "text": "Accept.",
+        "text_ko": "받아들여."
+      }
+    ]
+  }
+}

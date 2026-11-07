@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RobotATC Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=7">
+<script src="three.min.js"></script>
+<script src="OrbitControls.js"></script>
+<script src="STLLoader.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div class="brand">
+      <a class="mark" href="../">RobotATC</a>
+      <span class="sub" data-i18n="sub">Design studio — kinematic–dynamic co-design of a modular arm by shared-link ATC</span>
+    </div>
+    <nav class="top-right">
+      <button class="present" id="btn-present" onclick="togglePresent()" data-i18n="top.present" title="Hide the panel and show the scene only (Esc to return)">Presentation</button>
+      <a href="../#paper" data-i18n="nav.paper">Paper</a>
+      <a href="../agents/">Agents</a>
+      <a href="./" aria-current="page" data-i18n="nav.studio">Studio</a>
+      <a href="https://github.com/jangseop-park/robot-atc" data-i18n="nav.code">Code</a>
+      <a href="../#cite" data-i18n="nav.cite">Cite</a>
+      <span class="lang" role="group" aria-label="Language"><button data-lang="en" class="on">EN</button><span>/</span><button data-lang="ko">KO</button></span>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="side">
+
+      <p class="engine" data-i18n-html="engine"><b>Model</b> closed-form IK · inverse dynamics by RNEA (Pinocchio) · convex-hull collision checks (GJK) · trapezoidal joint profiles · HEBI catalog ratings. No contact physics; the gripper time is neglected.</p>
+      <div class="mode-row">
+        <button class="mode on" id="mode-design" onclick="setMode('design')" data-i18n="mode.design">Design</button>
+        <button class="mode" id="mode-coord" onclick="setMode('coord')" data-i18n="mode.coord">Coordination</button>
+      </div>
+
+      <section class="panel">
+        <h2 data-i18n="cells.h">Work cell</h2>
+        <div class="cell-grid" id="cell-grid"></div>
+        <p class="hint" id="cell-hint"></p>
+      </section>
+
+      <section class="panel">
+        <h2><span data-i18n="lam.h">Weight λ</span> <span class="h2-note" data-i18n="lam.note">trade-off between mass and coverage</span></h2>
+        <div class="lam-row" id="lam-row"></div>
+        <div class="design-card" id="design-card"></div>
+      </section>
+
+      <section class="panel coord-only" id="coord-panel" hidden>
+        <h2><span data-i18n="coord.h">Coordination</span> <span class="h2-note" data-i18n="coord.note">the two copies of the link lengths, round by round</span></h2>
+        <div class="play-row">
+          <button class="btn" id="btn-coord-play" onclick="toggleCoordPlay()" data-i18n="coord.play">Play rounds</button>
+          <button class="btn quiet" onclick="coordTo(0)" data-i18n="coord.r1">Round 1</button>
+          <span class="round-label" id="round-label"></span>
+        </div>
+        <input type="range" id="round-scrub" min="0" max="0" value="0" step="1" oninput="coordTo(+this.value)">
+        <div class="coord-readout" id="coord-readout"></div>
+        <canvas id="plane" width="330" height="300"></canvas>
+        <canvas id="curves" width="330" height="200"></canvas>
+        <p class="hint" data-i18n="coord.hint">Kinematic copy in green, dynamic copy in red, system target in gray, on the plane of the link lengths. Crosses mark the all-in-one solution and the three starts. In the scene the two copies stand as stick arms at the first waypoint over the coordinated design.</p>
+      </section>
+
+      <section class="panel design-only">
+        <h2 data-i18n="prog.h">Robot program</h2>
+        <div class="play-row">
+          <button class="btn" id="btn-play" onclick="togglePlay()" data-i18n="prog.play">Play cycle</button>
+          <button class="btn quiet" onclick="gotoWaypoint(0)" data-i18n="prog.first">First waypoint</button>
+          <label class="speed"><span data-i18n="prog.speed">speed</span> <input type="range" id="play-speed" min="0.25" max="3" step="0.25" value="1"></label>
+        </div>
+        <input type="range" id="scrub" min="0" max="0" value="0" step="1" oninput="scrubTo(+this.value)">
+        <p class="hint" id="play-hint" data-i18n="prog.hint">LIN retract along the tool axis, PTP to the next retract pose, LIN approach. The gripper opens on the approach and closes at the waypoint.</p>
+      </section>
+
+      <section class="panel design-only">
+        <h2><span data-i18n="joints.h">Joints</span> <span class="h2-note" data-i18n="joints.note">drag to pose the arm by hand</span></h2>
+        <div id="sliders"></div>
+        <div class="fk" id="fk"></div>
+      </section>
+
+      <section class="panel">
+        <h2 data-i18n="view.h">View</h2>
+        <div class="toggles">
+          <label><input type="checkbox" id="chk-way" checked onchange="redrawOverlay()"> <span data-i18n="view.way">waypoints and approach axes</span></label>
+          <label><input type="checkbox" id="chk-props" checked onchange="redrawOverlay()"> <span data-i18n="view.props">cell equipment</span></label>
+          <label><input type="checkbox" id="chk-axes" onchange="toggleAxes(this.checked)"> <span data-i18n="view.axes">joint frames</span></label>
+          <label><input type="checkbox" id="chk-grid" checked onchange="toggleGrid(this.checked)"> <span data-i18n="view.grid">floor grid</span></label>
+          <label><input type="checkbox" id="chk-paper" onchange="setPaperMode(this.checked)"> <span data-i18n="view.paper">paper mode (white, shadow only)</span></label>
+        </div>
+        <div class="cam-row">
+          <input type="text" id="cam-pose" placeholder="camera pose, 6 numbers" data-i18n-attr="placeholder:cam.ph" spellcheck="false">
+          <button class="btn xs" onclick="copyCameraPose()" data-i18n="cam.copy">Copy</button>
+          <button class="btn xs" onclick="pasteCameraPose()" data-i18n="cam.apply">Apply</button>
+          <button class="btn xs" onclick="savePNG(3)">PNG ×3</button>
+        </div>
+      </section>
+
+    </aside>
+
+    <main class="stage">
+      <div id="three" class="three"></div>
+      <div class="legend">
+        <span><i style="background:#1A365D"></i><span data-i18n="leg.t25">T25 · T8 actuators</span></span>
+        <span><i style="background:#4C7BBA"></i><span data-i18n="leg.t5">T5 actuators</span></span>
+        <span><i style="background:#E07A2E"></i><span data-i18n="leg.br">brackets</span></span>
+        <span><i style="background:#B8BDC7"></i><span data-i18n="leg.tube">link tubes a₂, a₃</span></span>
+        <span><i style="background:#C0392B"></i><span data-i18n="leg.wp">waypoints</span></span>
+        <span><i style="background:#E8B931"></i><span data-i18n="leg.part">part · TCP</span></span>
+        <span><i style="background:#1A365D;opacity:.55"></i><span data-i18n="leg.trace">TCP path</span></span>
+      </div>
+      <div class="stage-note" id="stage-note"></div>
+    </main>
+  </div>
+</div>
+<script src="i18n.js?v=6"></script>
+<script src="../lang.js"></script>
+<script src="app.js?v=23"></script>
+</body>
+</html>

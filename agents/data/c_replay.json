@@ -1,0 +1,536 @@
+{
+  "cell": "c",
+  "name": "Inspection line",
+  "name_ko": "검사 라인",
+  "K": 4,
+  "payload_kg": 2.0,
+  "t_seg_s": 1.5,
+  "pairs": 3,
+  "cycle_s": 10.0,
+  "mode": "reference_replay",
+  "note": "Stage 1: a recorded run of the Task agent where one had every field right, else a written reference dialogue (task_mode). Stage 2: a recorded run of the Layout agent (layout.run). Stage 3: coordination numbers from studio/data (final RobotATC campaign).",
+  "note_ko": "페이지용 대본 리플레이. 사용자 발화는 연구자가 쓴 것(reference replay)이고 사용자 연구 기록이 아님. 설비·검사·조율 수치는 studio/data (RobotATC 캠페인 7, 집기–놓기 프로그램)에서 옴.",
+  "chat": [
+    {
+      "who": "user",
+      "text": "An inspection line for a 1.5 kg part. The part comes in on a feeder, is measured at one station and marked at the next, and leaves on a tray. Measuring takes 1.5 s and marking takes 1.5 s, and the robot waits meanwhile. We need 400 parts an hour.",
+      "text_ko": "1.5 kg 부품의 검사 라인입니다. 부품이 공급기로 들어와 한 스테이션에서 측정되고 다음 스테이션에서 각인된 뒤 트레이로 나갑니다. 측정 1.5초, 각인 1.5초이고 그동안 로봇은 기다립니다. 시간당 400개가 필요합니다."
+    },
+    {
+      "who": "agent",
+      "kind": "tool",
+      "text": "<i>textbook search:</i> robot applications type of work inspection line part comes in on a feeder measured at one station marked at the next leaves on a tray<br><i>passages from pp.</i> 225, 217, 223, 222, 356, 217",
+      "text_ko": "<i>교재 검색:</i> robot applications type of work inspection line part comes in on a feeder measured at one station marked at the next leaves on a tray<br><i>찾은 구절의 쪽:</i> 225, 217, 223, 222, 356, 217"
+    },
+    {
+      "who": "agent",
+      "text": "I propose the work type is &quot;machine loading/unloading (inspection)&quot;, because the robot is used to pick parts from a feeder, load them into a measurement station, then unload them after marking, which is a typical inspection loading/unloading task. (p. 223)",
+      "text_ko": "I propose the work type is &quot;machine loading/unloading (inspection)&quot;, because the robot is used to pick parts from a feeder, load them into a measurement station, then unload them after marking, which is a typical inspection loading/unloading task. (p. 223)"
+    },
+    {
+      "who": "user",
+      "text": "Yes, that is right.",
+      "text_ko": "Yes, that is right."
+    },
+    {
+      "who": "agent",
+      "kind": "tool",
+      "text": "<i>textbook search:</i> pick and place pairs program robot inspection cell points program list<br><i>passages from pp.</i> 241, 215, 233, 225, 89, 217",
+      "text_ko": "<i>교재 검색:</i> pick and place pairs program robot inspection cell points program list<br><i>찾은 구절의 쪽:</i> 241, 215, 233, 225, 89, 217"
+    },
+    {
+      "who": "agent",
+      "text": "I propose the robot program visits four points in this order: P1 is the feeder where the part arrives, P2 is the measurement station, P3 is the marking station, and P4 is the tray where the finished part leaves. The carrying moves would be: pick at P1 and place at P2, pick at P2 and place at P3, pick at P3 and place at P4. After the last move the robot would return empty to P1. (p. 225)",
+      "text_ko": "I propose the robot program visits four points in this order: P1 is the feeder where the part arrives, P2 is the measurement station, P3 is the marking station, and P4 is the tray where the finished part leaves. The carrying moves would be: pick at P1 and place at P2, pick at P2 and place at P3, pick at P3 and place at P4. After the last move the robot would return empty to P1. (p. 225)"
+    },
+    {
+      "who": "user",
+      "text": "Yes, that is right.",
+      "text_ko": "Yes, that is right.",
+      "fills": [
+        "sequence"
+      ]
+    },
+    {
+      "who": "agent",
+      "text": "Which gripper do you plan to use, and what is its mass in kilograms?",
+      "text_ko": "Which gripper do you plan to use, and what is its mass in kilograms?"
+    },
+    {
+      "who": "user",
+      "text": "A standard two-finger gripper of the robot vendor, 0.5 kg.",
+      "text_ko": "A standard two-finger gripper of the robot vendor, 0.5 kg."
+    },
+    {
+      "who": "agent",
+      "kind": "tool",
+      "text": "<i>textbook search:</i> payload kg robot gripper mass calculation<br><i>passages from pp.</i> 216, 213, 231, 217, 207, 239",
+      "text_ko": "<i>교재 검색:</i> payload kg robot gripper mass calculation<br><i>찾은 구절의 쪽:</i> 216, 213, 231, 217, 207, 239"
+    },
+    {
+      "who": "agent",
+      "text": "The payload is the mass of the heaviest part plus the gripper: 1.5 kg part + 0.5 kg gripper = 2.0 kg. (p. 216)",
+      "text_ko": "The payload is the mass of the heaviest part plus the gripper: 1.5 kg part + 0.5 kg gripper = 2.0 kg. (p. 216)"
+    },
+    {
+      "who": "user",
+      "text": "Yes, that is right.",
+      "text_ko": "Yes, that is right.",
+      "fills": [
+        "payload"
+      ]
+    },
+    {
+      "who": "agent",
+      "text": "I calculated the robot cycle time as follows:<br>1. Cycle time: 3600 s / 400 parts = 9.0 s per part.<br>2. Machine or station time: measurement 1.5 s + marking 1.5 s = 3.0 s.<br>3. Moves in one cycle: pick P1→P2, pick P2→P3, pick P3→P4 (3 carrying moves) plus one empty move from P4 back to P1 = 4 moves.<br>4. Time per move: (9.0 – 3.0) / 4 = 1.5 s per move.<br>(See textbook, p. 225 for cycle time calculation.)",
+      "text_ko": "I calculated the robot cycle time as follows:<br>1. Cycle time: 3600 s / 400 parts = 9.0 s per part.<br>2. Machine or station time: measurement 1.5 s + marking 1.5 s = 3.0 s.<br>3. Moves in one cycle: pick P1→P2, pick P2→P3, pick P3→P4 (3 carrying moves) plus one empty move from P4 back to P1 = 4 moves.<br>4. Time per move: (9.0 – 3.0) / 4 = 1.5 s per move.<br>(See textbook, p. 225 for cycle time calculation.)"
+    },
+    {
+      "who": "user",
+      "text": "Yes, that is right.",
+      "text_ko": "Yes, that is right.",
+      "fills": [
+        "timing"
+      ]
+    },
+    {
+      "who": "agent",
+      "text": "For each point, please tell me whether the robot enters from above or from the side. For example, for P1 say &quot;above&quot; or &quot;side&quot;.",
+      "text_ko": "For each point, please tell me whether the robot enters from above or from the side. For example, for P1 say &quot;above&quot; or &quot;side&quot;."
+    },
+    {
+      "who": "user",
+      "text": "From above at all four.",
+      "text_ko": "From above at all four.",
+      "fills": [
+        "approach"
+      ]
+    },
+    {
+      "who": "agent",
+      "text": "I have compiled the full specification:<br>The work type is machine loading/unloading (inspection), because the robot picks parts from a feeder, loads them into a measurement station, then unloads them after marking, which is a typical inspection loading/unloading task. (p. 223)<br>The program consists of three carrying moves: pick at point 1 (feeder) and place at point 2 (measurement), pick at point 2 and place at point 3 (marking), pick at point 3 and place at point 4 (tray). The robot then returns empty to point 1. So the program is [[1,2],[2,3],[3,4]]. (p. 225)<br>The part mass is 1.5 kg. (p. 225)<br>The gripper mass is 0.5 kg. (p. 216)<br>The payload mass is 1.5 kg + 0.5 kg = 2.0 kg. (p. 216)<br>The time per move is 1.5 s, calculated from the required 400 parts per hour and the 3 s of station time. (p. 225)<br>The robot approaches each point from above. (p. 225)<br>The fixtures are the feeder (point 1), the measurement station (point 2), the marking station (point<br>3) and the tray (point 4).<br>Please confirm that this specification is correct.",
+      "text_ko": "I have compiled the full specification:<br>The work type is machine loading/unloading (inspection), because the robot picks parts from a feeder, loads them into a measurement station, then unloads them after marking, which is a typical inspection loading/unloading task. (p. 223)<br>The program consists of three carrying moves: pick at point 1 (feeder) and place at point 2 (measurement), pick at point 2 and place at point 3 (marking), pick at point 3 and place at point 4 (tray). The robot then returns empty to point 1. So the program is [[1,2],[2,3],[3,4]]. (p. 225)<br>The part mass is 1.5 kg. (p. 225)<br>The gripper mass is 0.5 kg. (p. 216)<br>The payload mass is 1.5 kg + 0.5 kg = 2.0 kg. (p. 216)<br>The time per move is 1.5 s, calculated from the required 400 parts per hour and the 3 s of station time. (p. 225)<br>The robot approaches each point from above. (p. 225)<br>The fixtures are the feeder (point 1), the measurement station (point 2), the marking station (point<br>3) and the tray (point 4).<br>Please confirm that this specification is correct.",
+      "confirm": true
+    },
+    {
+      "who": "user",
+      "text": "Yes, that is right.",
+      "text_ko": "Yes, that is right."
+    }
+  ],
+  "task_card": [
+    {
+      "key": "sequence",
+      "label": "Program",
+      "label_ko": "프로그램",
+      "value": "P1 → P2 · P2 → P3 · P3 → P4, back to P1",
+      "value_ko": "P1 → P2 · P2 → P3 · P3 → P4, P1 로 복귀",
+      "source": "textbook, p. 225",
+      "source_ko": "교재 225쪽",
+      "chip": "P1 → P2 · P2 → P3 · P3 → P4",
+      "chip_ko": "P1 → P2 · P2 → P3 · P3 → P4"
+    },
+    {
+      "key": "payload",
+      "label": "Payload",
+      "label_ko": "하중",
+      "value": "1.5 kg + gripper 0.5 kg on the carrying legs; gripper alone on the return",
+      "value_ko": "들고 가는 구간 1.5 kg + 그리퍼 0.5 kg; 복귀는 그리퍼만",
+      "source": "textbook, p. 216",
+      "source_ko": "교재 216쪽",
+      "chip": "2.0 kg",
+      "chip_ko": "2.0 kg"
+    },
+    {
+      "key": "timing",
+      "label": "Timing",
+      "label_ko": "시간",
+      "value": "1.5 s per move",
+      "value_ko": "이동당 1.5 s",
+      "source": "textbook, p. 225",
+      "source_ko": "교재 225쪽",
+      "chip": "1.5 s per move",
+      "chip_ko": "동작당 1.5 s"
+    },
+    {
+      "key": "approach",
+      "label": "Approach",
+      "label_ko": "접근",
+      "value": "vertical approach at all four points, 50 mm (default)",
+      "value_ko": "네 점 모두 수직 접근, 50 mm (기본값)",
+      "source": "",
+      "source_ko": "",
+      "chip": "50 mm",
+      "chip_ko": "50 mm"
+    },
+    {
+      "key": "range",
+      "label": "Approach speed",
+      "label_ko": "접근 속도",
+      "value": "0.2 – 0.6 m/s (process limit, decided by the design)",
+      "value_ko": "0.2 – 0.6 m/s (공정 한계, 설계가 정함)",
+      "source": "stated by the agent, confirmed with the card",
+      "source_ko": "에이전트가 알림, 카드와 함께 확인",
+      "chip": "0.2 – 0.6 m/s",
+      "chip_ko": "0.2 – 0.6 m/s"
+    }
+  ],
+  "sketch": {
+    "points": [
+      {
+        "label": "P1 feeder",
+        "label_ko": "P1 공급기",
+        "fixture": "conveyor",
+        "fixture_ko": "공급기",
+        "approach": "down"
+      },
+      {
+        "label": "P2 measure",
+        "label_ko": "P2 측정",
+        "fixture": "station",
+        "fixture_ko": "스테이션",
+        "approach": "down"
+      },
+      {
+        "label": "P3 mark",
+        "label_ko": "P3 각인",
+        "fixture": "station",
+        "fixture_ko": "스테이션",
+        "approach": "down"
+      },
+      {
+        "label": "P4 tray",
+        "label_ko": "P4 트레이",
+        "fixture": "tray",
+        "fixture_ko": "트레이",
+        "approach": "down"
+      }
+    ],
+    "pairs": [
+      [
+        0,
+        1,
+        "A"
+      ],
+      [
+        1,
+        2,
+        "A"
+      ],
+      [
+        2,
+        3,
+        "A"
+      ]
+    ]
+  },
+  "task_mode": "recorded",
+  "task_run": "task4_c_s0",
+  "task_note": "Recorded run of gpt-oss:20b (task4_c_s0). The engineer in it is scripted: plant facts only, and every proposal is accepted. The dialogue is shown as it was produced; 1 turn the harness sent back for being out of order is left out.",
+  "task_note_ko": "gpt-oss:20b 의 기록된 실행입니다 (task4_c_s0). 엔지니어는 대본입니다: 공장의 사실만 알고 제안을 모두 수락합니다. 대화는 나온 그대로입니다; 순서를 벗어나 실행틀이 되돌린 1 턴은 뺐습니다.",
+  "layout": {
+    "run": "layout_c_s0",
+    "submitted": true,
+    "note": "Recorded run of gpt-oss:20b (layout_c_s0). The confirmation in it is scripted. Tool calls and results are shown as recorded.",
+    "note_ko": "gpt-oss:20b 의 기록된 실행입니다 (layout_c_s0). 확인 답변은 대본입니다. 도구 호출과 결과는 기록 그대로입니다.",
+    "fixtures": [
+      {
+        "model": "conveyor",
+        "points": "P1",
+        "joined": false,
+        "dims": "length 600 mm (default) · width 170 mm (layout sheet)",
+        "dims_ko": "길이 600 mm (기본값) · 폭 170 mm (배치표)"
+      },
+      {
+        "model": "station",
+        "points": "P2",
+        "joined": false,
+        "dims": "",
+        "dims_ko": ""
+      },
+      {
+        "model": "station_high",
+        "points": "P3",
+        "joined": false,
+        "dims": "",
+        "dims_ko": ""
+      },
+      {
+        "model": "tray",
+        "points": "P4",
+        "joined": false,
+        "dims": "top x 170, top y 170 mm (default)",
+        "dims_ko": "상판 x 170, 상판 y 170 mm (기본값)"
+      }
+    ],
+    "builds": [
+      [
+        {
+          "model": "conveyor",
+          "points": "P1",
+          "joined": false,
+          "dims": "length 600 mm (default) · width 170 mm (layout sheet)",
+          "dims_ko": "길이 600 mm (기본값) · 폭 170 mm (배치표)"
+        },
+        {
+          "model": "station",
+          "points": "P2",
+          "joined": false,
+          "dims": "",
+          "dims_ko": ""
+        },
+        {
+          "model": "station_high",
+          "points": "P3",
+          "joined": false,
+          "dims": "",
+          "dims_ko": ""
+        },
+        {
+          "model": "tray",
+          "points": "P4",
+          "joined": false,
+          "dims": "top x 170, top y 170 mm (default)",
+          "dims_ko": "상판 x 170, 상판 y 170 mm (기본값)"
+        }
+      ]
+    ],
+    "checks": [
+      {
+        "label": "units and frames",
+        "label_ko": "단위와 좌표계",
+        "ok": true,
+        "detail": "positions in metres in the robot base frame, waypoints are flange poses",
+        "line": "positions in metres in the robot base frame, waypoints are flange poses"
+      },
+      {
+        "label": "reach",
+        "label_ko": "도달",
+        "ok": true,
+        "detail": "farthest waypoint P3: 0.43 m out, 0.36 m up; the longest arm reaches 1.0 m",
+        "line": "farthest waypoint P3: 0.43 m out, 0.36 m up"
+      },
+      {
+        "label": "clearance",
+        "label_ko": "간섭",
+        "ok": true,
+        "detail": "no grasp point lies inside a fixture",
+        "line": "no grasp point lies inside a fixture"
+      },
+      {
+        "label": "sizability",
+        "label_ko": "사이징 가능",
+        "ok": true,
+        "detail": "5 of 6 probe arms run the program with catalogue actuators at 0.30 m/s",
+        "line": "5 of 6 probe arms run the program with catalogue actuators at 0.30 m/s"
+      }
+    ],
+    "problem": [
+      {
+        "label": "Variables",
+        "label_ko": "변수",
+        "value": "a₂, a₃ ∈ [150, 500] mm · v_app ∈ [0.2, 0.6] m/s · six actuators from the catalog",
+        "value_ko": "a₂, a₃ ∈ [150, 500] mm · v_app ∈ [0.2, 0.6] m/s · 카탈로그에서 구동기 여섯"
+      },
+      {
+        "label": "Objective",
+        "label_ko": "목적",
+        "value": "min  M − λ·η,  λ ∈ {0, 0.5, 1, 2, 8}",
+        "value_ko": "min  M − λ·η,  λ ∈ {0, 0.5, 1, 2, 8}"
+      },
+      {
+        "label": "Constraints",
+        "label_ko": "제약",
+        "value": "all 4 waypoints reachable (closed-form IK) · torque and speed within the ratings along the program (RNEA) · no collision with the fixtures, the standing parts and the floor",
+        "value_ko": "4개 작업점 도달(닫힌형 IK) · 프로그램 내 토크·속도가 정격 안(RNEA) · 설비·놓인 부품·바닥과 충돌 없음"
+      },
+      {
+        "label": "Decomposition",
+        "label_ko": "분해",
+        "value": "kinematics (coverage, SQP) ‖ dynamics (sizing, pattern search), shared (a₂, a₃)",
+        "value_ko": "기구학(커버리지, SQP) ‖ 동역학(사이징, pattern search), 공유 (a₂, a₃)"
+      }
+    ],
+    "log": [
+      {
+        "kind": "input",
+        "points": [
+          "P1",
+          "P2",
+          "P3",
+          "P4"
+        ],
+        "sheet": [
+          {
+            "p": "P1",
+            "equipment": "feeder belt",
+            "pos": "241, -344, 265",
+            "side": "above",
+            "side_ko": "위에서",
+            "known": "width 170 mm",
+            "known_ko": "폭 170 mm"
+          },
+          {
+            "p": "P2",
+            "equipment": "measuring station (probe beside the part)",
+            "pos": "423, 75, 365",
+            "side": "above",
+            "side_ko": "위에서",
+            "known": "",
+            "known_ko": ""
+          },
+          {
+            "p": "P3",
+            "equipment": "marking station (head above the part)",
+            "pos": "215, 372, 365",
+            "side": "above",
+            "side_ko": "위에서",
+            "known": "",
+            "known_ko": ""
+          },
+          {
+            "p": "P4",
+            "equipment": "output tray",
+            "pos": "-177, 381, 265",
+            "side": "above",
+            "side_ko": "위에서",
+            "known": "",
+            "known_ko": ""
+          }
+        ]
+      },
+      {
+        "kind": "build",
+        "b": 0,
+        "call": [
+          {
+            "model": "conveyor",
+            "points": "P1"
+          },
+          {
+            "model": "station",
+            "points": "P2"
+          },
+          {
+            "model": "station_high",
+            "points": "P3"
+          },
+          {
+            "model": "tray",
+            "points": "P4"
+          }
+        ],
+        "ok": true,
+        "n": 4,
+        "boxes": 19,
+        "joined": [],
+        "error": "",
+        "dims": [
+          {
+            "model": "conveyor",
+            "text": "length 600 mm (default) · width 170 mm (layout sheet)",
+            "text_ko": "길이 600 mm (기본값) · 폭 170 mm (배치표)"
+          },
+          {
+            "model": "tray",
+            "text": "top x 170, top y 170 mm (default)",
+            "text_ko": "상판 x 170, 상판 y 170 mm (기본값)"
+          }
+        ]
+      },
+      {
+        "kind": "ask",
+        "question": "The following dimensions are defaults of the equipment models:\n- Conveyor length: 600 mm\n- Tray top size: 170 mm × 170 mm\nDo these values match the actual equipment? If not, please provide the correct values in metres (e.g., length_m: 0.65, top_x_m: 0.18, top_y_m: 0.18).",
+        "answer": "The default dimensions are fine."
+      },
+      {
+        "kind": "check",
+        "checks": [
+          {
+            "label": "units and frames",
+            "label_ko": "단위와 좌표계",
+            "ok": true,
+            "detail": "positions in metres in the robot base frame, waypoints are flange poses",
+            "line": "positions in metres in the robot base frame, waypoints are flange poses"
+          },
+          {
+            "label": "reach",
+            "label_ko": "도달",
+            "ok": true,
+            "detail": "farthest waypoint P3: 0.43 m out, 0.36 m up; the longest arm reaches 1.0 m",
+            "line": "farthest waypoint P3: 0.43 m out, 0.36 m up"
+          },
+          {
+            "label": "clearance",
+            "label_ko": "간섭",
+            "ok": true,
+            "detail": "no grasp point lies inside a fixture",
+            "line": "no grasp point lies inside a fixture"
+          },
+          {
+            "label": "sizability",
+            "label_ko": "사이징 가능",
+            "ok": true,
+            "detail": "5 of 6 probe arms run the program with catalogue actuators at 0.30 m/s",
+            "line": "5 of 6 probe arms run the program with catalogue actuators at 0.30 m/s"
+          }
+        ]
+      },
+      {
+        "kind": "problem",
+        "variables": 3,
+        "ranges": 3,
+        "constraints": 3,
+        "weights": 5
+      },
+      {
+        "kind": "ask",
+        "question": "The optimization problem has been defined with the variables, ranges, constraints, objective, and decomposition shown above. Do you confirm this problem definition and would like to submit it?",
+        "answer": "Confirmed."
+      },
+      {
+        "kind": "submit"
+      }
+    ]
+  },
+  "opt": {
+    "chat": [
+      {
+        "who": "agent",
+        "round": 0,
+        "text": "Weight λ = 1 (default). Three starts, best kept. Round 1: target (350, 275 mm), kinematics (423, 348 mm), dynamics (256, 250 mm), 266 mm apart.",
+        "text_ko": "가중치 λ = 1 (기본값). 시작점 셋, 최선을 택합니다. 1 라운드: 목표값 (350, 275 mm), 기구학 (423, 348 mm), 동역학 (256, 250 mm), 266 mm 차이."
+      },
+      {
+        "who": "agent",
+        "round": 1,
+        "text": "Round 2: the copies did not close in, so the weight rises, w 0.40 → 0.50.",
+        "text_ko": "2 라운드: 두 사본이 더 좁혀지지 않아 가중치를 올립니다, w 0.40 → 0.50."
+      },
+      {
+        "who": "agent",
+        "round": 17,
+        "text": "Round 18: 3.1 mm apart, v_app 0.30 m/s.",
+        "text_ko": "18 라운드: 3.1 mm 차이, v_app 0.30 m/s."
+      },
+      {
+        "who": "agent",
+        "round": 20,
+        "text": "Round 21: the copies agree within 1 mm. Re-verifying the design on the full cycle.",
+        "text_ko": "21 라운드: 두 사본이 1 mm 안에서 일치. 전체 사이클로 설계를 재검증합니다."
+      },
+      {
+        "who": "agent",
+        "at": "design",
+        "confirm": true,
+        "text": "Design: tubes 271 / 289 mm, v_app 0.30 m/s, T8-3 · T8-9 · T5-4 · T5-4 · T5-1 · T5-1, 4.556 kg, η 0.820. Best of three starts: S1. Accept?",
+        "text_ko": "설계: 튜브 271 / 289 mm, v_app 0.30 m/s, T8-3 · T8-9 · T5-4 · T5-4 · T5-1 · T5-1, 4.556 kg, η 0.820. 시작점 셋 중 최선: S1. 받아들이시겠습니까?"
+      },
+      {
+        "who": "user",
+        "text": "Accept.",
+        "text_ko": "받아들여."
+      }
+    ]
+  }
+}

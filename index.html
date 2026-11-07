@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RobotATC — An Agentic AI Framework for Kinematic–Dynamic Co-Design</title>
+<meta name="description" content="Language model agents write the co-design problem of a modular 6-DOF arm from a production requirement, and shared-link analytical target cascading solves it. Nine industrial work cells, code and data.">
+<meta property="og:title" content="RobotATC — An Agentic AI Framework for Kinematic–Dynamic Co-Design of Modular Robot Manipulators">
+<meta property="og:description" content="From a production requirement to a modular arm: three language model agents, deterministic checks, and shared-link analytical target cascading on nine industrial work cells.">
+<meta property="og:image" content="https://robotatc.github.io/assets/framework_staged.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%231A365D'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23E07A2E'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="top-wrap">
+<header class="top">
+  <a class="mark" href="/">RobotATC</a>
+  <nav>
+    <a href="#paper" data-i18n="nav.paper">Paper</a>
+    <a href="agents/">Agents</a>
+    <a href="studio/" data-i18n="nav.studio">Studio</a>
+    <a href="https://github.com/jangseop-park/robot-atc" data-i18n="nav.code">Code</a>
+    <a href="#cite" data-i18n="nav.cite">Cite</a>
+    <span class="lang" role="group" aria-label="Language"><button data-lang="en" class="on">EN</button><span>/</span><button data-lang="ko">KO</button></span>
+  </nav>
+</header>
+</div>
+
+<main>
+
+<section class="title">
+  <p class="venue" data-i18n="venue">Under review, 2026</p>
+  <h1><b data-i18n="h1">An Agentic AI Framework for Kinematic–Dynamic Co-Design</b><br><span data-i18n="h1sub">of Modular Robot Manipulators from Production Requirements</span></h1>
+  <p class="authors" data-i18n-html="authors">Jangseop Park, Donghoon Oh, and Namwoo Kang<br><em>Korea Advanced Institute of Science and Technology</em></p>
+  <p class="links">
+    <span class="btn quiet" data-i18n="btn.paper">Paper (under review)</span>
+    <a class="btn" href="agents/">Agents</a>
+    <a class="btn" href="studio/" data-i18n="btn.studio">Design studio</a>
+    <a class="btn quiet" href="https://github.com/jangseop-park/robot-atc" data-i18n="btn.code">Code and data</a>
+    <a class="btn quiet" href="#cite">BibTeX</a>
+  </p>
+</section>
+
+<section class="cells" aria-label="The nine work cells">
+  <figure>
+    <div class="grid9">
+      <img src="assets/cell_a_wp.png?v=20261107" alt="(a) Pick and place, two waypoints">
+      <img src="assets/cell_b_wp.png?v=20261107" alt="(b) Cart loading, two waypoints">
+      <img src="assets/cell_c_wp.png?v=20261107" alt="(c) Inspection line, four waypoints">
+      <img src="assets/cell_d_wp.png?v=20261107" alt="(d) Raw part loading, two waypoints">
+      <img src="assets/cell_e_wp.png?v=20261107" alt="(e) Part unloading, two waypoints">
+      <img src="assets/cell_f_wp.png?v=20261107" alt="(f) Machine tending, three waypoints">
+      <img src="assets/cell_g_wp.png?v=20261107" alt="(g) Shelf stocking, five waypoints">
+      <img src="assets/cell_h_wp.png?v=20261107" alt="(h) Block stacking, five waypoints">
+      <img src="assets/cell_i_wp.png?v=20261107" alt="(i) Sorting, five waypoints">
+    </div>
+    <figcaption data-i18n="cells.cap">Nine industrial work cells in three groups, transfer (a) to (c), tending (d) to (f) and stacking (g) to (i), with one to four pick-and-place pairs over two to five waypoints. Every part is a 70 mm block, yellow 1.0 kg, blue 1.5 kg or red 2.5 kg. In every cell the arm shown is the coordinated design at weight λ = 1, holding the part at the first pick point. Red marks are the waypoints, arrows the approach axes.</figcaption>
+  </figure>
+</section>
+
+<section class="prose" id="framework">
+  <h2 data-i18n="fw.h">From a production requirement to a robot design</h2>
+  <p data-i18n="fw.p1">The design problem of a robot cell is usually written by hand. An engineer turns the production requirement of the plant, the throughput, the parts and their masses, and a plant drawing, into a task specification and a cell model, and then states the optimization problem. The framework hands the writing to language model agents and keeps every design value with the solvers.</p>
+  <p data-i18n-html="fw.p2">In Stage 1 a <b>task agent</b> writes the task specification and cites a page of a manufacturing textbook, retrieved by search, for every derived field. In Stage 2 a <b>work-cell agent</b> names the equipment at every waypoint, and code places it and runs four deterministic checks on units, reach, clearance and sizability before any solver runs. The user confirms each proposal. In Stage 3 an <b>optimization agent</b> chooses from which starts the shared-link coordination below is run.</p>
+  <figure class="wide">
+    <img src="assets/framework_staged.png?v=20261107" alt="The three stages of the framework on example cells, with the dialog of each agent and the confirmation of the user">
+    <figcaption data-i18n="fw.cap">The framework on example cells. Bubbles quote the run records. The language model proposes, code checks, and only solvers compute design values.</figcaption>
+  </figure>
+</section>
+
+<section class="prose">
+  <h2 data-i18n="prob.h">The design problem</h2>
+  <p data-i18n="prob.p1">A modular arm is assembled from catalog actuators, brackets, and link tubes cut to length. For a given work cell the designer chooses the two link lengths, the six actuators, and the speed of the approach motion. The two requirements favor opposite link lengths. Reaching the waypoints after they move a little favors longer links, whereas holding the shoulder torque within the rating of a lighter module favors shorter ones.</p>
+  <p data-i18n="prob.p2">The two requirements are also evaluated by different kinds of model. Reachability follows from the closed-form inverse kinematics of the arm and has an explicit gradient in the link lengths. The torque and speed demands come from a simulation of the robot program by inverse dynamics and have no gradient at all. A single problem over all variables would have to treat the kinematics as a black box as well.</p>
+  <figure class="arm">
+    <img src="assets/arm_cad.png?v=20261107" alt="The modular arm from the vendor CAD with joint frames and the dimensions d1, a2, a3, d4, d5, d6">
+    <figcaption data-i18n="arm.cap">The arm from the vendor CAD. Actuators J1 to J6 with their joint axes and Denavit–Hartenberg frames, the two link tubes cut to the free lengths a₂ and a₃, and the offsets d₁, d₄, d₅, d₆ fixed by the actuator housings.</figcaption>
+  </figure>
+</section>
+
+<section class="prose">
+  <h2 data-i18n="atc.h">Shared-link analytical target cascading</h2>
+  <p data-i18n="atc.p">The formulation keeps the two disciplines apart. A kinematic subproblem maximizes workspace coverage by a gradient method on a smoothed reach margin. A dynamic subproblem sets the approach speed and selects the actuators that minimize the mass along the trajectory, by a pattern search around the simulation. Each subproblem holds its own copy of the two link lengths, and a system level drives the copies to agreement with augmented-Lagrangian target cascading. Only the link lengths are exchanged. Because coordination is a local procedure, it can be run from three starts that differ in the proportion of the arm, and the optimization agent decides which of them to run.</p>
+  <figure class="wide">
+    <img src="assets/c_trace9.png?v=20261107" alt="Coordination of the nine cells at λ = 1 on the plane of the link lengths: kinematic response, dynamic response and system target, by iteration">
+    <figcaption data-i18n="trace.cap">The nine cells at λ = 1, each from the best of three starts. The kinematic response (green) starts long and the dynamic response (red) short, and the copies agree at the circled design.</figcaption>
+  </figure>
+</section>
+
+<section class="prose">
+  <h2 data-i18n="find.h">What the nine cells show</h2>
+  <ul class="findings">
+    <li data-i18n-html="find.0"><b>The agents write the problem.</b> Before any correction the task agent derives every field correctly in 20 of 45 runs, and the rest are corrected at the confirmation. Retrieval from the textbook raises its accuracy on 38 specification questions from 26 to 79 percent. All 27 runs of the work-cell agent pass the four checks, and in earlier versions of the agent the checks caught 12 of 54 runs that the model could not repair.</li>
+    <li data-i18n-html="find.1"><b>All 45 coordinated runs converge.</b> One iteration at a zero weight, 13 to 34 otherwise. The kinematic subproblem first returns the longer pair of link lengths in every run, by 138 to 400 mm. At a zero weight a sequential procedure, link lengths first and actuators afterwards, is heavier in six of the nine cells, by up to 2.76 kg.</li>
+    <li data-i18n-html="find.2"><b>The coordinated designs match an all-in-one solution.</b> In 34 of 36 runs the weighted objective is within one tube step of mass (25 g) of the undecomposed all-in-one solution, at the same number of sizing calls. The other two, in cell (e), settle in a different basin, 52 and 68 g heavier.</li>
+    <li data-i18n-html="find.3"><b>The start decides the basin, and the agent chooses the starts.</b> A single start from the lightest design misses by up to 2.2 kg. The optimization agent keeps the best of three starts in all 108 runs with 90 percent of their sizing calls, whereas a fixed two-run rule spends 70 percent and misses the basin in four of 36 cases.</li>
+  </ul>
+  <figure class="wide">
+    <img src="assets/c_fronts9.png?v=20261107" alt="Mass against coverage in the nine cells: the five coordinated designs by weight, and the all-in-one solutions">
+    <figcaption data-i18n="fronts.cap">Mass against coverage in the nine cells. Red circles are the coordinated designs labeled by λ, green crosses the individual starts, and gray crosses the all-in-one solutions, each joined by a gray segment to the coordinated design of its weight.</figcaption>
+  </figure>
+</section>
+
+<section class="prose">
+  <h2 data-i18n="cycle.h">One cycle of the robot program</h2>
+  <p data-i18n="cycle.p">The sizing is done on the robot program the cell actually runs, a sequence of pick-and-place pairs. Each leg is a linear retraction along the tool axis, a joint-space move to the next retract pose, and a linear approach. The part and the parallel-jaw gripper ride on the carrying legs, the gripper alone on the way back, and a part that has been set down stays in the cell as an obstacle, so a pallet is stacked and a shelf fills tier by tier. Where a straight move would sweep through a fixture or a standing part, the program lifts first.</p>
+  <div class="gifs">
+    <figure><img src="assets/cell_a_c.gif?v=20261005" loading="lazy" alt="Pick and place cycle"><figcaption data-i18n="gif.a">(a) Pick and place, 1 pair, 1 kg</figcaption></figure>
+    <figure><img src="assets/cell_f_c.gif?v=20261005" loading="lazy" alt="Machine tending cycle"><figcaption data-i18n="gif.f">(f) Machine tending, 2 pairs, 2.5 kg</figcaption></figure>
+    <figure><img src="assets/cell_h_c.gif?v=20261005" loading="lazy" alt="Palletizing cycle"><figcaption data-i18n="gif.h">(h) Block stacking, 4 pairs, 2.5 kg, two layers</figcaption></figure>
+  </div>
+  <figure class="wide">
+    <img src="assets/c_demand_heat.png?v=20261107" alt="Per-joint torque and speed demand of the coordinated designs against the ratings of the selected actuators">
+    <figcaption data-i18n="demand.cap">Per-joint demand of the λ = 1 designs against the rating of the selected actuator. Of the 54 joints, 26 are within twenty percent of a rating, 18 by torque and 8 by speed, so the approach speed is a decision of the dynamic subproblem.</figcaption>
+  </figure>
+</section>
+
+<section class="prose" id="studio">
+  <h2 data-i18n="studio.h">Design studio</h2>
+  <p data-i18n="studio.p">Every coordinated design of the paper, on the vendor CAD, in the browser. Pick a work cell and a weight, read the link lengths, the actuators, the mass and the coverage, and play the cycle of the robot program the sizing was done on. The joint trajectories, the waypoints and the fixtures are the ones the figures above were rendered from. A second mode replays the coordination itself, round by round: the kinematic and the dynamic copy of the link lengths on their plane, the inconsistency and the penalty weight, and the two copies standing as stick arms over the final design.</p>
+  <p><a class="btn" href="studio/" data-i18n="studio.btn">Open the design studio</a></p>
+</section>
+
+<section class="prose" id="agents">
+  <h2 data-i18n="agents.h">Agents replayed</h2>
+  <p data-i18n-html="agents.p">A second page replays the three agents on the nine cells, from the request of the plant to the parts list: the <b>task agent</b> with its textbook pages, the <b>work-cell agent</b> with its checks and the optimization problem, and the <b>optimization agent</b> with the coordination it starts. The user confirms every hand-over. All agents run gpt-oss 20B locally.</p>
+  <p><a class="btn" href="agents/" data-i18n="agents.btn">Open the agents page</a></p>
+</section>
+
+<section class="prose" id="paper">
+  <h2 data-i18n="paper.h">Paper and code</h2>
+  <p data-i18n-html="paper.p">The manuscript is under review. The code, the run records of the agents, and the full tables of designs, costs, and starts will be released as <a href="https://github.com/jangseop-park/robot-atc">RobotATC on GitHub</a> upon publication, and every number in the paper is generated from those files.</p>
+  <div id="cite">
+    <h3 data-i18n="cite.h">Cite</h3>
+<pre>@misc{park2026agentic,
+  title  = {An Agentic {AI} Framework for Kinematic--Dynamic Co-Design of
+            Modular Robot Manipulators from Production Requirements},
+  author = {Park, Jangseop and Oh, Donghoon and Kang, Namwoo},
+  year   = {2026},
+  note   = {Under review}
+}</pre>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p data-i18n-html="ft.1">Smart Design Lab, KAIST. Contact: <a href="mailto:nwkang@kaist.ac.kr">nwkang@kaist.ac.kr</a></p>
+  <p data-i18n="ft.2">Vendor CAD models © HEBI Robotics, rendered from the public description package.</p>
+</footer>
+
+<script src="i18n.js?v=11"></script>
+<script src="lang.js"></script>
+</body>
+</html>
