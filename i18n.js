@@ -6,7 +6,7 @@ window.I18N = {
     "h1": "모듈러 로봇 매니퓰레이터의 기구학–동역학 동시설계를 위한",
     "h1sub": "생산 요구 기반 Agentic AI 프레임워크",
     "authors": "박장섭, 오동훈, 강남우<br><em>한국과학기술원 (KAIST)</em>",
-    "btn.paper": "논문 (심사 중)", "btn.studio": "설계 스튜디오", "btn.code": "코드와 데이터",
+    "btn.paper": "논문 (심사 중)", "btn.studio": "설계 스튜디오", "btn.code": "코드와 데이터 (게재 시 공개)",
     "cells.cap": "산업 작업 셀 아홉 개를 세 묶음으로, 옮기기 (a)–(c)·텐딩 (d)–(f)·쌓기 (g)–(i). 작업점 2 – 5 개 위에 집기–놓기 쌍 1 – 4 개. 부품은 모두 70 mm 블록이고 질량을 색으로 구분한다 (노랑 1.0, 파랑 1.5, 빨강 2.5 kg). 모든 셀에서 보이는 팔은 가중치 λ = 1 의 조율된 설계이며 첫 집기 점에서 부품을 쥐고 있다. 빨간 표시는 작업점, 화살표는 접근축이다.",
 
     "find.0": "<b>Agent 가 문제를 쓴다.</b> 교정 전 task agent 는 45 회 중 20 회에서 모든 항목을 바르게 도출하고, 나머지는 확인 단계에서 고쳐진다. 교재 검색은 명세 질문 38 개의 정답률을 26 % 에서 79 % 로 올린다. Work-cell agent 의 27 회 실행 모두 검사 넷을 통과하며, 이전 판 agent 에서는 모델이 고치지 못한 54 회 중 12 회를 검사가 잡았다.",
@@ -44,7 +44,7 @@ window.I18N = {
     "agents.btn": "에이전트 페이지 열기",
 
     "paper.h": "논문과 코드",
-    "paper.p": "원고는 심사 중이다. 코드, agent 의 실행 기록, 설계·비용·시작점의 전체 표는 게재 시 <a href=\"https://github.com/jangseop-park/robot-atc\">GitHub 의 RobotATC</a> 로 공개하며, 논문의 모든 숫자는 그 파일들에서 생성된다.",
+    "paper.p": "원고는 심사 중이다. 코드, agent 의 실행 기록, 설계·비용·시작점의 전체 표는 게재 시 GitHub 의 RobotATC (jangseop-park/robot-atc) 로 공개하며, 논문의 모든 숫자는 그 파일들에서 생성된다.",
     "cite.h": "인용",
     "ft.1": "KAIST Smart Design Lab. 연락: <a href=\"mailto:nwkang@kaist.ac.kr\">nwkang@kaist.ac.kr</a>",
     "ft.2": "벤더 CAD 모델 © HEBI Robotics, 공개 description 패키지에서 렌더링."
